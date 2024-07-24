@@ -55,18 +55,7 @@ describe("Gameboard", () => {
       expect(gameboard.board.length).toBe(10);
 
       for (let i = 0; i < 10; i++) {
-        expect(gameboard.board[i]).toEqual([
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-          false,
-        ]);
+        gameboard.board[i].forEach((item) => expect(item).toBe(null));
       }
     });
   });
@@ -121,6 +110,26 @@ describe("Gameboard", () => {
       gameboard.receiveAttack(3, 5);
 
       expect(gameboard.allShipsSunk()).toBe(true);
+    });
+  });
+
+  describe("checkForShip", () => {
+    it("should return false meaning there is not a ship in the cell", () => {
+      const gameboard = new Gameboard();
+
+      gameboard.addShip(new Ship(1), 1, 2);
+      gameboard.addShip(new Ship(1), 3, 5);
+
+      expect(gameboard.checkForShip(2, 2)).toBe(false);
+    });
+
+    it("should return true meaning there is a ship in the cell", () => {
+      const gameboard = new Gameboard();
+
+      gameboard.addShip(new Ship(1), 1, 2);
+      gameboard.addShip(new Ship(1), 3, 5);
+
+      expect(gameboard.checkForShip(3, 5)).toBe(true);
     });
   });
 });

@@ -6,7 +6,7 @@ class Gameboard {
     this.ships = [];
 
     for (let i = 0; i < 10; i++) {
-      this.board.push(new Array(10).fill(false));
+      this.board.push(new Array(10).fill(null));
     }
   }
 
@@ -27,6 +27,7 @@ class Gameboard {
     this.board[row][col] = ship;
   }
 
+  checkForShip = (row, col) => this.board[row][col] !== null;
   allShipsSunk = () => this.ships.every((item) => item.isSunk());
 }
 
