@@ -1,0 +1,10 @@
+@import "./main.scss";
+
+header {
+  display: flex;
+  justify-content: space-between;
+
+  button {
+    background-color: $enemy-color !important;
+  }
+}

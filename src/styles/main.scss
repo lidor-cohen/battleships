@@ -1,5 +1,48 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+
+$player-color: #699bf7;
+$enemy-color: #ff8577;
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  padding: 4em 2em;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3em;
+
+  width: 60%;
+  margin: 0 auto;
+}
+
+h1 {
+  font-weight: 900;
+  font-size: 2.5rem;
+}
+
+.primary-btn {
+  appearance: none;
+  outline: none;
+
+  padding: 0 1em;
+  font-size: 1.2em;
+  font-weight: 700;
+
+  border: 2px solid black;
+  box-shadow: 2px 3px black;
+  border-radius: 50px;
+
+  cursor: pointer;
+  background-color: white;
+
+  &:hover {
+    box-shadow: none;
+    transform: translate(1%, 3%);
+  }
 }
