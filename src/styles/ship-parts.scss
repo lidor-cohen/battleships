@@ -1,0 +1,83 @@
+.ship-part {
+  padding: 0 1em;
+  font-size: 1.2em;
+  font-weight: 700;
+
+  height: 50px;
+  width: 50px;
+
+  border: 2px solid black;
+  box-shadow: 2px 3px black;
+  border-radius: 10px;
+
+  background-color: white;
+  position: relative;
+}
+
+.ship-parts-demo {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 1fr 1fr;
+  place-items: center;
+  gap: 20px;
+
+  p {
+    font-size: 35px;
+    color: gray;
+  }
+}
+
+// PARTS
+
+// VERTICAL PARTS
+.vertical-ship-part-art {
+  position: absolute;
+  transform: translate(-50%);
+  background-color: black;
+
+  width: 65%;
+  height: 80%;
+
+  bottom: 0;
+  left: 50%;
+}
+
+.vertical-top-ship {
+  border-radius: 20px 20px 0 0;
+}
+
+.vertical-body-ship {
+  height: 100%;
+}
+
+.vertical-bottom-ship {
+  top: 0;
+  border-radius: 0 0 20px 20px;
+}
+
+// HORIZONTAL PARTS
+.horizontal-ship-part-art {
+  position: absolute;
+  transform: translate(0, -50%);
+  background-color: black;
+
+  width: 80%;
+  height: 65%;
+
+  top: 50%;
+  left: 0;
+}
+
+.horizontal-left-ship {
+  border-radius: 20px 0 0 20px;
+  right: 0;
+  left: auto;
+}
+
+.horizontal-body-ship {
+  width: 100%;
+}
+
+.horizontal-right-ship {
+  border-radius: 0 20px 20px 0;
+}
