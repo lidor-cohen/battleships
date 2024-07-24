@@ -21,6 +21,13 @@ class Gameboard {
     this.misses.push([row, col]);
     return false;
   }
+
+  addShip(ship, row, col) {
+    this.ships.push(ship);
+    this.board[row][col] = ship;
+  }
+
+  allShipsSunk = () => this.ships.every((item) => item.isSunk());
 }
 
 module.exports = Gameboard;

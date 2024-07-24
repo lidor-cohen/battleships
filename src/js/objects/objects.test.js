@@ -80,12 +80,47 @@ describe("Gameboard", () => {
 
     it("should hit and sink a ship that has been attacked", () => {
       const gameboard = new Gameboard();
-      gameboard.board[1][2] = new Ship(1);
+
+      gameboard.addShip(new Ship(1), 1, 2);
 
       expect(gameboard.receiveAttack(1, 2)).toBe(true);
       expect(gameboard.hits[0]).toEqual([1, 2]);
 
       expect(gameboard.board[1][2].isSunk()).toBe(true);
+    });
+  });
+
+  describe("add a new ship to the gameboard", () => {
+    const gameboard = new Gameboard();
+    const ship = new Ship(1);
+    gameboard.addShip(ship, 1, 2);
+
+    expect(gameboard.board[1][2]).toEqual(ship);
+    expect(gameboard.ships).toContain(ship);
+  });
+
+  describe("allShipsSunk", () => {
+    it("should return false meaning not all ships has sunken yet", () => {
+      const gameboard = new Gameboard();
+
+      gameboard.addShip(new Ship(1), 1, 2);
+      gameboard.addShip(new Ship(1), 3, 5);
+
+      gameboard.receiveAttack(1, 2);
+
+      expect(gameboard.allShipsSunk()).toBe(false);
+    });
+
+    it("should return true meaning all ships has sunken", () => {
+      const gameboard = new Gameboard();
+
+      gameboard.addShip(new Ship(1), 1, 2);
+      gameboard.addShip(new Ship(1), 3, 5);
+
+      gameboard.receiveAttack(1, 2);
+      gameboard.receiveAttack(3, 5);
+
+      expect(gameboard.allShipsSunk()).toBe(true);
     });
   });
 });
