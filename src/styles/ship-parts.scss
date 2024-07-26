@@ -14,6 +14,17 @@
   position: relative;
 }
 
+.clickableShipPart {
+  &:hover {
+    box-shadow: none;
+    transform: translate(1%, 3%);
+  }
+
+  &:active {
+    box-shadow: inset 2px 2px 5px #0000006e;
+  }
+}
+
 .ship-parts-demo {
   display: grid;
   grid-template-columns: repeat(5, 1fr);

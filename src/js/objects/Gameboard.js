@@ -31,4 +31,4 @@ class Gameboard {
   allShipsSunk = () => this.ships.every((item) => item.isSunk());
 }
 
-module.exports = Gameboard;
+export default Gameboard;

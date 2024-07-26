@@ -18,4 +18,4 @@ class Ship {
   sink = () => (this.sunk = true);
 }
 
-module.exports = Ship;
+export default Ship;
