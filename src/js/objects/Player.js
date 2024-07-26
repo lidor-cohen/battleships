@@ -32,6 +32,12 @@ class Player {
 
   validate() {
     const boardValid = this.gameboard.validateBoard();
+    console.log(boardValid);
+
+    Array.from(this.boardElement.children).forEach((child) => {
+      child.style.border = "2px solid black";
+      child.style.boxShadow = "2px 3px black";
+    });
 
     boardValid.completedShips.forEach((shipObj) => {
       for (let i = 0; i < shipObj.length; i++) {

@@ -44,12 +44,19 @@ class Cell {
       this.parts.push(this.currPart);
       this.currPart = this.parts[0];
 
-      this.element.innerHTML = `<div class="${
-        this.currPart.split("-")[0]
-      }-ship-part-art ${this.currPart}"></div>`;
+      if (this.currPart !== "") {
+        this.element.innerHTML = `<div class="${
+          this.currPart.split("-")[0]
+        }-ship-part-art ${this.currPart}"></div>`;
 
-      this.gameboard.board[this.i][this.j] = this.currPart;
+        this.gameboard.board[this.i][this.j] = this.currPart;
+      } else {
+        this.element.innerHTML = "";
+
+        this.gameboard.board[this.i][this.j] = null;
+      }
     });
+
     this.element.addEventListener("contextmenu", (event) => {
       event.preventDefault();
 
@@ -57,11 +64,16 @@ class Cell {
       this.parts.unshift(this.currPart);
       this.currPart = this.parts[0];
 
-      this.element.innerHTML = `<div class="${
-        this.currPart.split("-")[0]
-      }-ship-part-art ${this.currPart}"></div>`;
+      if (this.currPart !== "") {
+        this.element.innerHTML = `<div class="${
+          this.currPart.split("-")[0]
+        }-ship-part-art ${this.currPart}"></div>`;
 
-      this.gameboard.board[this.i][this.j] = this.currPart;
+        this.gameboard.board[this.i][this.j] = this.currPart;
+      } else {
+        this.element.innerHTML = "";
+        this.gameboard.board[this.i][this.j] = null;
+      }
     });
   }
 }
