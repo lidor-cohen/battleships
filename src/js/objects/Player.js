@@ -29,6 +29,37 @@ class Player {
       }
     }
   }
+
+  validate() {
+    const boardValid = this.gameboard.validateBoard();
+
+    boardValid.completedShips.forEach((shipObj) => {
+      for (let i = 0; i < shipObj.length; i++) {
+        let currCell = null;
+
+        if (shipObj.alignment === "vertical") {
+          currCell = this.boardElement.querySelector(
+            `#player-${shipObj.startIndex[0] + i}-${shipObj.startIndex[1]}`
+          );
+        } else {
+          currCell = this.boardElement.querySelector(
+            `#player-${shipObj.startIndex[0]}-${shipObj.startIndex[1] + i}`
+          );
+        }
+        currCell.style.border = "2px solid lime";
+        currCell.style.boxShadow = "2px 3px lime";
+      }
+    });
+
+    boardValid.invalidIndexes.forEach((indexCouple) => {
+      let currCell = this.boardElement.querySelector(
+        `#player-${indexCouple[0]}-${indexCouple[1]}`
+      );
+
+      currCell.style.border = "2px solid red";
+      currCell.style.boxShadow = "2px 3px red";
+    });
+  }
 }
 
 export default Player;

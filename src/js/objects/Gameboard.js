@@ -136,9 +136,6 @@ class Gameboard {
       }
     });
 
-    console.log("completedShips:");
-    console.log(completedShips);
-
     // Add all ships to list of valid indexes
     completedShips.forEach((shipObj) => {
       if (shipObj.alignment === "horizontal") {
@@ -160,7 +157,7 @@ class Gameboard {
       }
     }
 
-    console.log(invalidIndexes);
+    return { completedShips, invalidIndexes };
   }
 
   checkForShip = (row, col) => this.board[row][col] !== null;
