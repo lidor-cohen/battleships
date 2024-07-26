@@ -3,8 +3,13 @@
 header {
   display: flex;
   justify-content: space-between;
+}
 
-  button {
-    background-color: $enemy-color !important;
-  }
+#move-to-opps-btn {
+  display: none;
+  background-color: $enemy-color;
+}
+
+#submit-board-btn {
+  background-color: #ffc700;
 }

@@ -1,5 +1,5 @@
 class Cell {
-  constructor(type, i, j) {
+  constructor(gameboard, type, i, j) {
     this.parts =
       type === "player"
         ? [
@@ -14,6 +14,7 @@ class Cell {
         : ["", "hit", "miss"];
 
     this.currPart = this.parts[0];
+    this.gameboard = gameboard;
     this.type = type;
     this.i = i;
     this.j = j;
@@ -27,8 +28,12 @@ class Cell {
     cell.classList.add("ship-part");
     cell.classList.add("clickable-ship-part");
     cell.classList.add(`${this.type.toLowerCase()}-ship-part`);
+
     cell.id = `${this.type}-${this.i}-${this.j}`;
     cell.style.cursor = "pointer";
+    cell.style.width = "100%";
+    cell.style.height = "100%";
+    cell.style.borderRadius = "0.8em";
 
     return cell;
   }
@@ -43,10 +48,7 @@ class Cell {
         this.currPart.split("-")[0]
       }-ship-part-art ${this.currPart}"></div>`;
 
-      console.log(this.currPart);
-
-      // this.gameboard.board[i][j] = currPart;
-      // console.log(currPart, parts);
+      this.gameboard.board[this.i][this.j] = this.currPart;
     });
     this.element.addEventListener("contextmenu", (event) => {
       event.preventDefault();
@@ -59,10 +61,7 @@ class Cell {
         this.currPart.split("-")[0]
       }-ship-part-art ${this.currPart}"></div>`;
 
-      console.log(this.currPart);
-
-      // this.gameboard.board[i][j] = currPart;
-      // console.log(currPart, parts);
+      this.gameboard.board[this.i][this.j] = this.currPart;
     });
   }
 }

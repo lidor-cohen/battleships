@@ -14,6 +14,7 @@ class Player {
     this.boardElement.style.display = "grid";
     this.boardElement.style.gridTemplateColumns = `repeat(${this.gameboard.board.length}, 1fr)`;
     this.boardElement.style.gridTemplateRows = `repeat(${this.gameboard.board.length}, 1fr)`;
+    this.boardElement.style.gap = "10px";
     this.boardElement.style.placeItems = "center";
 
     this.updateBoard();
@@ -22,7 +23,7 @@ class Player {
   updateBoard() {
     for (let i = 0; i < this.gameboard.board.length; i++) {
       for (let j = 0; j < this.gameboard.board[i].length; j++) {
-        const cell = new Cell(this.type, i, j);
+        const cell = new Cell(this.gameboard, this.type, i, j);
         this.cells.push(cell);
         this.boardElement.appendChild(cell.element);
       }
