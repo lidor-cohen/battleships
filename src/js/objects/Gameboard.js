@@ -35,8 +35,8 @@ class Gameboard {
     // V     2. No Extending Beyond Grid: Ships must be fully within the grid boundaries.
     // V     3. Straight Line: Ships must be placed either horizontally or vertically.
     // V     4. No Diagonal Placement: Ships cannot be placed diagonally.
-    // X     5. Fixed Length: Ships must match their designated lengths (e.g., 1-cell, 2-cells, 3-cells, 4-cells, 5-cells).
-    // X     6. Separate Ships: Ships must be spaced apart; they cannot touch each other, even diagonally.
+    // V     5. Fixed Length: Ships must match their designated lengths (e.g., 1-cell, 2-cells, 3-cells, 4-cells, 5-cells).
+    // V     6. Separate Ships: Ships must be spaced apart; they cannot touch each other, even diagonally.
     // X     7. 1x - Ship of 5, 1x - Ship of 4, 2x - Ship of 3, 1x - Ship of 2
 
     // check overlapping borders of ships:
@@ -74,7 +74,26 @@ class Gameboard {
       return adjacentShips;
     })();
 
-    return { adjacentShips };
+    const rightAmountShips = (() => {
+      const shipCounts = {
+        5: 0,
+        4: 0,
+        3: 0,
+        2: 0,
+      };
+
+      ships.forEach((ship) => {
+        shipCounts[ship.length]++;
+      });
+
+      if (shipCounts[5] !== 1) return false;
+      else if (shipCounts[4] !== 1) return false;
+      else if (shipCounts[3] !== 2) return false;
+      else if (shipCounts[2] !== 1) return false;
+      else return true;
+    })();
+
+    return { adjacentShips, rightAmountShips };
   }
 
   #getCompletedShips(startingCoords) {

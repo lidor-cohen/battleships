@@ -61,6 +61,7 @@ class Player {
       cell.style.boxShadow = "2px 3px red";
     });
 
+    // Set every adjacent ship to incorrent
     boardValid.validators.adjacentShips.forEach((ship) => {
       ship.getCoordinates().forEach((coords) => {
         const cell = this.boardElement.querySelector(
@@ -71,6 +72,8 @@ class Player {
         cell.style.boxShadow = "2px 3px red";
       });
     });
+
+    console.log(boardValid.validators.rightAmountShips);
   }
 }
 
