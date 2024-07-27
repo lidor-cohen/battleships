@@ -52,10 +52,13 @@ class Gameboard {
       let alignment = this.board[row][col].split("-")[0];
 
       // Check for next position with the same orientation
-      let shipPart =
-        alignment === "vertical"
-          ? this.board[row + shipLength][col]
-          : this.board[row][col + shipLength];
+      let shipPart = null;
+      if (alignment === "vertical" && row + shipLength < 10) {
+        shipPart = this.board[row + shipLength][col];
+      } else if (alignment === "horizontal" && col + shipLength < 10) {
+        shipPart = this.board[row][col + shipLength];
+      }
+
       while (shipPart !== null) {
         const shipPartAlignment = shipPart.split("-")[0];
         const shipPartPosition = shipPart.split("-")[1];
@@ -63,7 +66,10 @@ class Gameboard {
         if (shipPartAlignment === "vertical") {
           if (shipPartPosition === "body") {
             shipLength++;
-            shipPart = this.board[row + shipLength][col];
+
+            if (row + shipLength < 10) {
+              shipPart = this.board[row + shipLength][col];
+            } else break;
           } else if (shipPartPosition === "bottom") {
             completedShips.push(new Ship(row, col, shipLength + 1, "vertical"));
             break;
@@ -73,7 +79,10 @@ class Gameboard {
         } else if (shipPartAlignment === "horizontal") {
           if (shipPartPosition === "body") {
             shipLength++;
-            shipPart = this.board[row][col + shipLength];
+
+            if (col + shipLength < 10) {
+              shipPart = this.board[row][col + shipLength];
+            } else break;
           } else if (shipPartPosition === "right") {
             completedShips.push(
               new Ship(row, col, shipLength + 1, "horizontal")
@@ -113,9 +122,11 @@ class Gameboard {
 
     // Check for ship starts
     let shipStarts = this.#getShipStarts();
+    console.log("shipStarts completed");
 
     // Add all completed ships to list of valid indexes
     let completedShips = this.#getCompletedShips(shipStarts);
+    console.log("completedShips completed");
     completedShips.forEach((ship) =>
       validIndexes.push(...ship.getCoordinates())
     );
