@@ -42,11 +42,9 @@ class Player {
     // Set good ships to color lime
     boardValid.completedShips.forEach((ship) => {
       ship.getCoordinates().forEach((coords) => {
-        console.log(`#player-${coords.row}-${coords.col}`);
         const cell = this.boardElement.querySelector(
           `#player-${coords.row}-${coords.col}`
         );
-        console.log(cell);
 
         cell.style.border = "2px solid lime";
         cell.style.boxShadow = "2px 3px lime";

@@ -31,15 +31,13 @@ class Gameboard {
 
   #checkBoardRules(ships) {
     // TODO: Add the rules to the game:
-    //       1. No Overlapping: Ships cannot overlap each other on the grid.
-    //       2. No Extending Beyond Grid: Ships must be fully within the grid boundaries.
-    //       3. Straight Line: Ships must be placed either horizontally or vertically.
-    //       4. No Diagonal Placement: Ships cannot be placed diagonally.
-    //       5. Fixed Length: Ships must match their designated lengths (e.g., 1-cell, 2-cells, 3-cells, 4-cells, 5-cells).
-    //       6. Separate Ships: Ships must be spaced apart; they cannot touch each other, even diagonally.
-    //       7. 1x - Ship of 5, 1x - Ship of 4, 2x - Ship of 3, 1x - Ship of 2
-
-    function isAdjacent() {}
+    // V     1. No Overlapping: Ships cannot overlap each other on the grid.
+    // V     2. No Extending Beyond Grid: Ships must be fully within the grid boundaries.
+    // V     3. Straight Line: Ships must be placed either horizontally or vertically.
+    // V     4. No Diagonal Placement: Ships cannot be placed diagonally.
+    // X     5. Fixed Length: Ships must match their designated lengths (e.g., 1-cell, 2-cells, 3-cells, 4-cells, 5-cells).
+    // X     6. Separate Ships: Ships must be spaced apart; they cannot touch each other, even diagonally.
+    // X     7. 1x - Ship of 5, 1x - Ship of 4, 2x - Ship of 3, 1x - Ship of 2
   }
 
   #getCompletedShips(startingCoords) {
@@ -118,13 +116,14 @@ class Gameboard {
 
     // Add all completed ships to list of valid indexes
     let completedShips = this.#getCompletedShips(shipStarts);
-    completedShips.forEach((ship) => validIndexes.push(ship.getCoordinates()));
+    completedShips.forEach((ship) =>
+      validIndexes.push(...ship.getCoordinates())
+    );
 
     function arrayIncludes(arr, obj) {
-      arr.forEach((coords) => {
-        if (coords.row === obj.row && coords.col === obj.col) return true;
-      });
-      return false;
+      return arr.some(
+        (coords) => coords.row === obj.row && coords.col === obj.col
+      );
     }
 
     // Add all parts that arent part of a ship to list of invalid indexes
