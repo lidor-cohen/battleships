@@ -51,6 +51,7 @@ class Player {
       });
     });
 
+    // Set invalid indexes to color red
     boardValid.invalidIndexes.forEach((object) => {
       const cell = this.boardElement.querySelector(
         `#player-${object.row}-${object.col}`
@@ -58,6 +59,17 @@ class Player {
 
       cell.style.border = "2px solid red";
       cell.style.boxShadow = "2px 3px red";
+    });
+
+    boardValid.validators.adjacentShips.forEach((ship) => {
+      ship.getCoordinates().forEach((coords) => {
+        const cell = this.boardElement.querySelector(
+          `#player-${coords.row}-${coords.col}`
+        );
+
+        cell.style.border = "2px solid red";
+        cell.style.boxShadow = "2px 3px red";
+      });
     });
   }
 }

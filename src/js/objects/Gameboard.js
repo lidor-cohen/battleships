@@ -38,6 +38,43 @@ class Gameboard {
     // X     5. Fixed Length: Ships must match their designated lengths (e.g., 1-cell, 2-cells, 3-cells, 4-cells, 5-cells).
     // X     6. Separate Ships: Ships must be spaced apart; they cannot touch each other, even diagonally.
     // X     7. 1x - Ship of 5, 1x - Ship of 4, 2x - Ship of 3, 1x - Ship of 2
+
+    // check overlapping borders of ships:
+    // Function to determine if two ships are adjacent
+
+    // Function to find all adjacent ships in an array
+    const adjacentShips = (() => {
+      const areAdjacent = (ship1, ship2) => {
+        const ship1Coordinates = new Set(
+          ship1.getCoordinates().map(({ row, col }) => `${row},${col}`)
+        );
+        const ship2Coordinates = new Set(
+          ship2.getCoordinates().map(({ row, col }) => `${row},${col}`)
+        );
+
+        // Get all border coordinates of ship1
+        const ship1Borders = ship1
+          .getBorder()
+          .map(({ row, col }) => `${row},${col}`);
+
+        // Check if any border of ship1 overlaps with coordinates of ship2
+        return ship1Borders.some((border) => ship2Coordinates.has(border));
+      };
+
+      const adjacentShips = [];
+
+      for (let i = 0; i < ships.length; i++) {
+        for (let j = i + 1; j < ships.length; j++) {
+          if (areAdjacent(ships[i], ships[j])) {
+            adjacentShips.push(...[ships[i], ships[j]]);
+          }
+        }
+      }
+
+      return adjacentShips;
+    })();
+
+    return { adjacentShips };
   }
 
   #getCompletedShips(startingCoords) {
@@ -122,11 +159,9 @@ class Gameboard {
 
     // Check for ship starts
     let shipStarts = this.#getShipStarts();
-    console.log("shipStarts completed");
 
     // Add all completed ships to list of valid indexes
     let completedShips = this.#getCompletedShips(shipStarts);
-    console.log("completedShips completed");
     completedShips.forEach((ship) =>
       validIndexes.push(...ship.getCoordinates())
     );
@@ -151,7 +186,10 @@ class Gameboard {
       }
     }
 
-    return { completedShips, invalidIndexes };
+    let validators = this.#checkBoardRules(completedShips);
+    console.log(validators.adjacentShips);
+
+    return { validators, completedShips, invalidIndexes };
   }
 
   checkForShip = (row, col) => this.board[row][col] !== null;
