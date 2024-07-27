@@ -1,3 +1,5 @@
+import Ship from "./Ship";
+
 class Gameboard {
   constructor() {
     this.board = [];
@@ -27,107 +29,57 @@ class Gameboard {
     this.board[row][col] = ship;
   }
 
-  validateBoard() {
-    function arraysEqual(a, b) {
-      if (a.length !== b.length) return false;
-      for (let i = 0; i < a.length; i++) {
-        if (a[i] !== b[i]) return false;
-      }
-      return true;
-    }
+  #checkBoardRules(ships) {
+    // TODO: Add the rules to the game:
+    //       1. No Overlapping: Ships cannot overlap each other on the grid.
+    //       2. No Extending Beyond Grid: Ships must be fully within the grid boundaries.
+    //       3. Straight Line: Ships must be placed either horizontally or vertically.
+    //       4. No Diagonal Placement: Ships cannot be placed diagonally.
+    //       5. Fixed Length: Ships must match their designated lengths (e.g., 1-cell, 2-cells, 3-cells, 4-cells, 5-cells).
+    //       6. Separate Ships: Ships must be spaced apart; they cannot touch each other, even diagonally.
+    //       7. 1x - Ship of 5, 1x - Ship of 4, 2x - Ship of 3, 1x - Ship of 2
 
-    function arrayIncludes(arr, subArray) {
-      return arr.some((element) => arraysEqual(element, subArray));
-    }
+    function isAdjacent() {}
+  }
 
+  #getCompletedShips(startingCoords) {
     let completedShips = [];
-    let horizontalShipStarts = [];
-    let verticalShipStarts = [];
-
-    let validIndexes = [];
-    let invalidIndexes = [];
-
-    // Check for ship starts
-    for (let i = 0; i < this.board.length; i++) {
-      for (let j = 0; j < this.board.length; j++) {
-        const cell = this.board[i][j];
-
-        if (cell !== null) {
-          const alignment = cell.split("-")[0];
-
-          if (alignment === "horizontal") {
-            if (cell.split("-")[1] === "left") {
-              horizontalShipStarts.push([i, j]);
-            }
-          } else if (alignment === "vertical") {
-            if (cell.split("-")[1] === "top") {
-              verticalShipStarts.push([i, j]);
-            }
-          }
-        }
-      }
-    }
 
     // Check for completed ships and add to list - VERTICAL
-    verticalShipStarts.forEach((indexes) => {
-      const row = indexes[0];
-      const col = indexes[1];
+    startingCoords.forEach((coords) => {
+      const row = coords[0];
+      const col = coords[1];
 
-      let forwardIndex = 1;
       let shipLength = 1;
+      let alignment = this.board[row][col].split("-")[0];
 
-      let shipPart = this.board[row + forwardIndex][col];
+      // Check for next position with the same orientation
+      let shipPart =
+        alignment === "vertical"
+          ? this.board[row + shipLength][col]
+          : this.board[row][col + shipLength];
       while (shipPart !== null) {
-        shipPart = this.board[row + forwardIndex][col];
         const shipPartAlignment = shipPart.split("-")[0];
         const shipPartPosition = shipPart.split("-")[1];
 
         if (shipPartAlignment === "vertical") {
           if (shipPartPosition === "body") {
             shipLength++;
-            forwardIndex++;
+            shipPart = this.board[row + shipLength][col];
           } else if (shipPartPosition === "bottom") {
-            completedShips.push({
-              alignment: "vertical",
-              startIndex: [row, col],
-              endIndex: [row + forwardIndex, col],
-              length: shipLength + 1,
-            });
-
+            completedShips.push(new Ship(row, col, shipLength + 1, "vertical"));
             break;
           } else {
             break;
           }
-        }
-      }
-    });
-
-    // Check for completed ships and add to list - HORIZONTAL
-    horizontalShipStarts.forEach((indexes) => {
-      const row = indexes[0];
-      const col = indexes[1];
-
-      let forwardIndex = 1;
-      let shipLength = 1;
-
-      let shipPart = this.board[row][col + forwardIndex];
-      while (shipPart !== null) {
-        shipPart = this.board[row][col + forwardIndex];
-        const shipPartAlignment = shipPart.split("-")[0];
-        const shipPartPosition = shipPart.split("-")[1];
-
-        if (shipPartAlignment === "horizontal") {
+        } else if (shipPartAlignment === "horizontal") {
           if (shipPartPosition === "body") {
             shipLength++;
-            forwardIndex++;
+            shipPart = this.board[row][col + shipLength];
           } else if (shipPartPosition === "right") {
-            completedShips.push({
-              alignment: "horizontal",
-              startIndex: [row, col],
-              endIndex: [row, col + forwardIndex],
-              length: shipLength + 1,
-            });
-
+            completedShips.push(
+              new Ship(row, col, shipLength + 1, "horizontal")
+            );
             break;
           } else {
             break;
@@ -136,23 +88,55 @@ class Gameboard {
       }
     });
 
-    // Add all ships to list of valid indexes
-    completedShips.forEach((shipObj) => {
-      if (shipObj.alignment === "horizontal") {
-        for (let i = 0; i < shipObj.length; i++) {
-          validIndexes.push([shipObj.startIndex[0], shipObj.startIndex[1] + i]);
-        }
-      } else {
-        for (let i = 0; i < shipObj.length; i++) {
-          validIndexes.push([shipObj.startIndex[0] + i, shipObj.startIndex[1]]);
-        }
-      }
-    });
+    return completedShips;
+  }
+
+  #getShipStarts() {
+    let shipStarts = [];
 
     for (let i = 0; i < this.board.length; i++) {
       for (let j = 0; j < this.board.length; j++) {
-        if (this.board[i][j] !== null && !arrayIncludes(validIndexes, [i, j])) {
-          invalidIndexes.push([i, j]);
+        const cell = this.board[i][j];
+
+        if (cell != null) {
+          if (cell.split("-")[1] === "left" || cell.split("-")[1] === "top") {
+            shipStarts.push([i, j]);
+          }
+        }
+      }
+    }
+
+    return shipStarts;
+  }
+
+  validateBoard() {
+    let validIndexes = [];
+    let invalidIndexes = [];
+
+    // Check for ship starts
+    let shipStarts = this.#getShipStarts();
+
+    // Add all completed ships to list of valid indexes
+    let completedShips = this.#getCompletedShips(shipStarts);
+    completedShips.forEach((ship) => validIndexes.push(ship.getCoordinates()));
+
+    function arrayIncludes(arr, obj) {
+      arr.forEach((coords) => {
+        if (coords.row === obj.row && coords.col === obj.col) return true;
+      });
+      return false;
+    }
+
+    // Add all parts that arent part of a ship to list of invalid indexes
+    for (let i = 0; i < this.board.length; i++) {
+      for (let j = 0; j < this.board.length; j++) {
+        const indexObj = { row: i, col: j };
+
+        if (
+          this.board[i][j] !== null &&
+          !arrayIncludes(validIndexes, indexObj)
+        ) {
+          invalidIndexes.push(indexObj);
         }
       }
     }

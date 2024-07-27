@@ -31,39 +31,35 @@ class Player {
   }
 
   validate() {
+    // Reset all previously applied styles to cells
+    Array.from(this.boardElement.children).forEach((cell) => {
+      cell.style.border = "2px solid black";
+      cell.style.boxShadow = "2px 3px black";
+    });
+
     const boardValid = this.gameboard.validateBoard();
-    console.log(boardValid);
 
-    Array.from(this.boardElement.children).forEach((child) => {
-      child.style.border = "2px solid black";
-      child.style.boxShadow = "2px 3px black";
+    // Set good ships to color lime
+    boardValid.completedShips.forEach((ship) => {
+      ship.getCoordinates().forEach((coords) => {
+        console.log(`#player-${coords.row}-${coords.col}`);
+        const cell = this.boardElement.querySelector(
+          `#player-${coords.row}-${coords.col}`
+        );
+        console.log(cell);
+
+        cell.style.border = "2px solid lime";
+        cell.style.boxShadow = "2px 3px lime";
+      });
     });
 
-    boardValid.completedShips.forEach((shipObj) => {
-      for (let i = 0; i < shipObj.length; i++) {
-        let currCell = null;
-
-        if (shipObj.alignment === "vertical") {
-          currCell = this.boardElement.querySelector(
-            `#player-${shipObj.startIndex[0] + i}-${shipObj.startIndex[1]}`
-          );
-        } else {
-          currCell = this.boardElement.querySelector(
-            `#player-${shipObj.startIndex[0]}-${shipObj.startIndex[1] + i}`
-          );
-        }
-        currCell.style.border = "2px solid lime";
-        currCell.style.boxShadow = "2px 3px lime";
-      }
-    });
-
-    boardValid.invalidIndexes.forEach((indexCouple) => {
-      let currCell = this.boardElement.querySelector(
-        `#player-${indexCouple[0]}-${indexCouple[1]}`
+    boardValid.invalidIndexes.forEach((object) => {
+      const cell = this.boardElement.querySelector(
+        `#player-${object.row}-${object.col}`
       );
 
-      currCell.style.border = "2px solid red";
-      currCell.style.boxShadow = "2px 3px red";
+      cell.style.border = "2px solid red";
+      cell.style.boxShadow = "2px 3px red";
     });
   }
 }
