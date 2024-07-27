@@ -1,5 +1,6 @@
 import Gameboard from "./Gameboard";
 import Cell from "./Cell";
+import ModalController from "../modalController";
 
 class Player {
   constructor(board, type) {
@@ -39,6 +40,12 @@ class Player {
 
     const boardValid = this.gameboard.validateBoard();
 
+    const errorList = {
+      invalidIndexes: boardValid.invalidIndexes,
+      adjacentShips: boardValid.validators.adjacentShips,
+      rightAmountOfShips: boardValid.validators.rightAmountShips,
+    };
+
     // Set good ships to color lime
     boardValid.completedShips.forEach((ship) => {
       ship.getCoordinates().forEach((coords) => {
@@ -52,7 +59,7 @@ class Player {
     });
 
     // Set invalid indexes to color red
-    boardValid.invalidIndexes.forEach((object) => {
+    errorList.invalidIndexes.forEach((object) => {
       const cell = this.boardElement.querySelector(
         `#player-${object.row}-${object.col}`
       );
@@ -62,7 +69,7 @@ class Player {
     });
 
     // Set every adjacent ship to incorrent
-    boardValid.validators.adjacentShips.forEach((ship) => {
+    errorList.adjacentShips.forEach((ship) => {
       ship.getCoordinates().forEach((coords) => {
         const cell = this.boardElement.querySelector(
           `#player-${coords.row}-${coords.col}`
@@ -73,7 +80,7 @@ class Player {
       });
     });
 
-    console.log(boardValid.validators.rightAmountShips);
+    ModalController.showErrors(errorList);
   }
 }
 
