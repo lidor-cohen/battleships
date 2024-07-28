@@ -1,86 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
-</head>
+  <body>
+    <header>
+      <h1>Your Board</h1>
+      <button id="move-to-opps-btn" class="primary-btn">
+        Your Opponent's Board
+      </button>
+      <button id="submit-board-btn" class="primary-btn">Submit Board</button>
+    </header>
 
-<body>
-  <header>
-    <h1>Your Board</h1>
-    <button id="move-to-opps-btn" class="primary-btn">Your Opponent's Board</button>
-    <button id="submit-board-btn" class="primary-btn">Submit Board</button>
-  </header>
-
-  <main>
-    <div id="playerBoard" class="content-wrapper board"></div>
-    <div class="content-wrapper side">
-      <h2>In a nutshell...</h2>
-      <div class="nutshell-item">
-        <p>1</p>
-        <p>Place all 5 ships on your board, following the cheatsheet at the bottom.</p>
-      </div>
-
-      <div class="nutshell-item">
-        <p>2</p>
-        <p>Note hits and misses of your opponent by clicking and toggling cells on your board.</p>
-      </div>
-
-      <div class="nutshell-item">
-        <p>3</p>
-        <p>After your opponent has shot, it’s your move. Go to your opponent’s board.</p>
-      </div>
-    </div>
-    <div class="content-wrapper side">
-      <h2>-> Tip</h2>
-      <p>Click on cells to toggle between empty, miss, hit, and boat states.</p>
-
-      <div class="ship-parts-demo">
-        <div class="ship-part">
-          <div class="vertical-ship-part-art vertical-top-ship"></div>
-        </div>
-        <p>-></p>
-        <div class="ship-part">
-          <div class="vertical-ship-part-art vertical-body-ship"></div>
-        </div>
-        <p>-></p>
-        <div class="ship-part">
-          <div class="vertical-ship-part-art vertical-bottom-ship"></div>
+    <main>
+      <div id="playerBoard" class="content-wrapper board"></div>
+      <div class="content-wrapper side">
+        <h2>In a nutshell...</h2>
+        <div class="nutshell-item">
+          <p>1</p>
+          <p>
+            Place all 5 ships on your board, following the cheatsheet at the
+            bottom.
+          </p>
         </div>
 
-        <div class="ship-part">
-          <div class="horizontal-ship-part-art horizontal-left-ship"></div>
+        <div class="nutshell-item">
+          <p>2</p>
+          <p>
+            Note hits and misses of your opponent by clicking and toggling cells
+            on your board.
+          </p>
         </div>
-        <p>-></p>
-        <div class="ship-part">
-          <div class="horizontal-ship-part-art horizontal-body-ship"></div>
-        </div>
-        <p>-></p>
-        <div class="ship-part">
-          <div class="horizontal-ship-part-art horizontal-right-ship"></div>
+
+        <div class="nutshell-item">
+          <p>3</p>
+          <p>
+            After your opponent has shot, it’s your move. Go to your opponent’s
+            board.
+          </p>
         </div>
       </div>
-    </div>
-  </main>
+      <div class="content-wrapper side">
+        <h2>-> Tip</h2>
+        <p>
+          Click on cells to toggle between empty, miss, hit, and boat states.
+        </p>
 
-  <dialog class="modal-dialog" id="error-dialog">
-    <p class="primary-btn close-modal-button" id="close-error-modal">✖</p>
-    <div class="container">
-      <h1>Errors:</h1>
-      <ul>
+        <div class="ship-parts-demo">
+          <div class="ship-part">
+            <div class="vertical-ship-part-art vertical-top-ship"></div>
+          </div>
+          <p>-></p>
+          <div class="ship-part">
+            <div class="vertical-ship-part-art vertical-body-ship"></div>
+          </div>
+          <p>-></p>
+          <div class="ship-part">
+            <div class="vertical-ship-part-art vertical-bottom-ship"></div>
+          </div>
 
-      </ul>
-    </div>
-  </dialog>
+          <div class="ship-part">
+            <div class="horizontal-ship-part-art horizontal-left-ship"></div>
+          </div>
+          <p>-></p>
+          <div class="ship-part">
+            <div class="horizontal-ship-part-art horizontal-body-ship"></div>
+          </div>
+          <p>-></p>
+          <div class="ship-part">
+            <div class="horizontal-ship-part-art horizontal-right-ship"></div>
+          </div>
+        </div>
+      </div>
+    </main>
 
-  <!-- <footer>
-    <div class="content-wrapper cheatsheet">
-      <h2>Ships Cheatsheet</h2>
-    </div>
-  </footer> -->
+    <section id="cheatsheet-section">
+      <h2>Cheatsheet</h2>
+      <div class="container cheatsheet-wrapper">
+        <p>
+          These are the ships you should place on your board. Remember, that
+          ships can’t be touching each other on either of the sides, including
+          corner edges.
+        </p>
 
-</body>
+        <div class="ships-cheatsheet">
+          <div class="ship-showcase">
+            <div class="ship-showcase-blocks">
+              <div class="ship-part">
+                <div
+                  class="horizontal-ship-part-art horizontal-left-ship"
+                ></div>
+              </div>
+              <div class="ship-part">
+                <div
+                  class="horizontal-ship-part-art horizontal-body-ship"
+                ></div>
+              </div>
+              <div class="ship-part">
+                <div
+                  class="horizontal-ship-part-art horizontal-body-ship"
+                ></div>
+              </div>
+              <div class="ship-part">
+                <div
+                  class="horizontal-ship-part-art horizontal-body-ship"
+                ></div>
+              </div>
+              <div class="ship-part">
+                <div
+                  class="horizontal-ship-part-art horizontal-right-ship"
+                ></div>
+              </div>
+            </div>
+            <p>Aircraft Carrier</p>
+          </div>
+          <div class="ship-showcase">
+            <div class="ship-showcase-blocks">
+              <div class="ship-part">
+                <div
+                  class="horizontal-ship-part-art horizontal-left-ship"
+                ></div>
+              </div>
+              <div class="ship-part">
+                <div
+                  class="horizontal-ship-part-art horizontal-body-ship"
+                ></div>
+              </div>
+              <div class="ship-part">
+                <div
+                  class="horizontal-ship-part-art horizontal-body-ship"
+                ></div>
+              </div>
+              <div class="ship-part">
+                <div
+                  class="horizontal-ship-part-art horizontal-right-ship"
+                ></div>
+              </div>
+            </div>
+            <p>Battleship</p>
+          </div>
+          <div class="ship-showcase">
+            <div class="ship-showcase-blocks">
+              <div class="ship-part">
+                <div
+                  class="horizontal-ship-part-art horizontal-left-ship"
+                ></div>
+              </div>
+              <div class="ship-part">
+                <div
+                  class="horizontal-ship-part-art horizontal-body-ship"
+                ></div>
+              </div>
+              <div class="ship-part">
+                <div
+                  class="horizontal-ship-part-art horizontal-right-ship"
+                ></div>
+              </div>
+            </div>
+            <p>Battleship</p>
+          </div>
+          <div class="ship-showcase">
+            <div class="ship-showcase-blocks">
+              <div class="ship-part">
+                <div
+                  class="horizontal-ship-part-art horizontal-left-ship"
+                ></div>
+              </div>
+              <div class="ship-part">
+                <div
+                  class="horizontal-ship-part-art horizontal-right-ship"
+                ></div>
+              </div>
+            </div>
+            <p>Battleship</p>
+          </div>
+          <div class="ship-showcase">
+            <div class="ship-showcase-blocks">
+              <div class="ship-part">
+                <div
+                  class="horizontal-ship-part-art horizontal-left-ship"
+                ></div>
+              </div>
+              <div class="ship-part">
+                <div
+                  class="horizontal-ship-part-art horizontal-right-ship"
+                ></div>
+              </div>
+            </div>
+            <p>Battleship</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
+    <dialog class="modal-dialog" id="error-dialog">
+      <p class="primary-btn close-modal-button" id="close-error-modal">✖</p>
+      <div class="container">
+        <h1>Errors:</h1>
+        <ul></ul>
+      </div>
+    </dialog>
+  </body>
 </html>

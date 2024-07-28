@@ -1,0 +1,53 @@
+@import "./main.scss";
+
+#cheatsheet-section {
+  position: relative;
+
+  h2 {
+    position: absolute;
+    top: -25px;
+    left: 40px;
+    font-size: 1.5rem;
+    background-color: white;
+    padding: 0.6rem 1.5rem;
+    border-radius: 30px;
+    border: 2px solid black;
+    box-shadow: 2px 3px black;
+  }
+
+  .container {
+    padding: 2em;
+    padding-top: 4em;
+    border: 2px solid black;
+    box-shadow: 2px 3px black;
+    height: 400px;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+
+    .ships-cheatsheet {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, 300px);
+      justify-content: flex-start;
+      gap: 2em;
+      padding: 1rem 0;
+
+      & * {
+        align-self: flex-start;
+      }
+
+      .ship-showcase {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+
+        .ship-showcase-blocks {
+          display: flex;
+          gap: 0.5em;
+        }
+      }
+    }
+  }
+}
